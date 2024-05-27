@@ -1,0 +1,46 @@
+{
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "CC65",
+      "options": {
+        "env": {
+          "FILENAME": "hello"
+        }
+      },
+      "command": "cc65 -Oirs ${FILENAME}.c --add-source ; ca65 crt0.s ; ca65 ${FILENAME}.s -g ; ld65 -C nrom_32k_vert.cfg -o game.nes crt0.o ${FILENAME}.o nes.lib -Ln labels.txt --dbgfile game.dbg ; rm *.o ; mkdir -p ./build/ ; mv labels.txt $_ ; mv ${FILENAME}.s $_ ; mv game.nes $_ ; mv game.dbg $_",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "detail": "Compile c for 6502 cpu",
+      "problemMatcher": [
+        {
+          "owner": "nesdev",
+          "pattern": [
+            {
+              "regexp": "^([^:]*):([0-9]+): ?([^:]*): ?(.*)$",
+              "file": 1,
+              "location": 2,
+              "severity": 3,
+              "message": 4
+            }
+          ]
+        },
+        {
+          "owner": "nesdev",
+          "pattern": [
+            {
+              "regexp": "^([^:]*)\\(([0-9]+)\\): ?([^:]*): ?(.*)$",
+              "file": 1,
+              "location": 2,
+              "severity": 3,
+              "message": 4
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "version": "2.0.0"
+}
